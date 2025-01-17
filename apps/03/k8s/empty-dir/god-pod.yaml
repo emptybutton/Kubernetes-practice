@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: god
+  labels:
+    number: "03"
+    mount: empty-dir
+    contains: all
+
+spec:
+  restartPolicy: OnFailure
+  containers:
+    - image: scripts:latest
+      name: worker
+      command: ["ash", "work.sh"]
+      volumeMounts:
+        - mountPath: /mnt
+          name: db
+
+    - image: scripts:latest
+      name: viewer
+      command: ["ash", "view.sh"]
+      volumeMounts:
+        - mountPath: /mnt
+          name: db
+          readOnly: true
+
+  volumes:
+    - name: db
+      emptyDir:
+        medium: Memory
+        sizeLimit: 10m
