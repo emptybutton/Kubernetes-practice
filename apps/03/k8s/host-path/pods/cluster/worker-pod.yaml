@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: worker
+  labels:
+    number: "03"
+    mount: host-path
+    containers: worker
+
+spec:
+  restartPolicy: OnFailure
+  containers:
+    - image: scripts
+      imagePullPolicy: IfNotPresent
+      name: worker
+      command: ["ash", "work.sh"]
+      volumeMounts:
+        - mountPath: /mnt
+          name: db
+  
+  volumes:
+    - name: db
+      hostPath:
+        path: /tmp/k8s-practice/03/db
+        type: DirectoryOrCreate

@@ -1,23 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: god
+  name: viewer
   labels:
     number: "03"
-    mount: empty-dir
-    contains: all
+    mount: host-path
+    containers: viewer
 
 spec:
   restartPolicy: OnFailure
   containers:
-    - image: scripts
-      imagePullPolicy: IfNotPresent
-      name: worker
-      command: ["ash", "work.sh"]
-      volumeMounts:
-        - mountPath: /mnt
-          name: db
-
     - image: scripts
       imagePullPolicy: IfNotPresent
       name: viewer
@@ -29,6 +21,6 @@ spec:
 
   volumes:
     - name: db
-      emptyDir:
-        medium: Memory
-        sizeLimit: 100Mi
+      hostPath:
+        path: /tmp/k8s-practice/03/db
+        type: DirectoryOrCreate

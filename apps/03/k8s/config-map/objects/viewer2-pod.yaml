@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: viewer2
+  labels:
+    number: "03"
+    mount: config-map
+    containers: viewer2
+
+spec:
+  restartPolicy: OnFailure
+  containers:
+    - image: scripts
+      imagePullPolicy: IfNotPresent
+      name: viewer2
+      env:
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: main-config-map
+              key: viewer2-message
+      volumeMounts:
+        - name: db
+          mountPath: /mnt
+          readOnly: true
+      
+      command: ["ash", "view.sh", "$(MESSAGE)"]
+
+  volumes:
+    - name: db
+      configMap:
+        name: main-config-map
+        items:
+          - key: text.txt
+            path: file.txt

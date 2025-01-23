@@ -4,8 +4,8 @@ metadata:
   name: god
   labels:
     number: "03"
-    mount: empty-dir
-    contains: all
+    mount: host-path
+    containers: all
 
 spec:
   restartPolicy: OnFailure
@@ -29,6 +29,6 @@ spec:
 
   volumes:
     - name: db
-      emptyDir:
-        medium: Memory
-        sizeLimit: 100Mi
+      hostPath:
+        path: /tmp/k8s-practice/03/db
+        type: DirectoryOrCreate

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: main-config-map
+  labels:
+    number: "03"
+    mount: config-map
+
+data:
+  viewer1-message: XXXXXXXXXXX
+  viewer2-message: YYYYYYYYYYY
+
+  text.txt: |
+    ___________
+    _____?_____
+    ___________
