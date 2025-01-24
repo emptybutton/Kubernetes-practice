@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: db2
+  labels:
+    number: "03"
+    mount: pv
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 200Mi
+  persistentVolumeReclaimPolicy: Retain
+  local:
+    path: /tmp/k8s-practice/03/db2
+  nodeSelector:
+    kubernetes.io/hostname: minikube

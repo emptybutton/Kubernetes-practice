@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-claim
+  labels:
+    number: "03"
+    mount: pv
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+  storageClassName: ""
+  selector:
+    matchLabels:
+      number: "03"
+      mount: pv

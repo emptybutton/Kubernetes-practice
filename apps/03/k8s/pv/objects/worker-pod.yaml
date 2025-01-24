@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: worker
+  labels:
+    number: "03"
+    mount: pv
+    containers: worker
+
+spec:
+  restartPolicy: OnFailure
+  containers:
+    - image: scripts
+      imagePullPolicy: IfNotPresent
+      name: worker
+      volumeMounts:
+        - name: db
+          mountPath: /mnt
+
+      command: ["ash", "worker.sh"]
+
+  volumes:
+    - name: db
+      persistentVolumeClaim:
+        claimName: db-claim
